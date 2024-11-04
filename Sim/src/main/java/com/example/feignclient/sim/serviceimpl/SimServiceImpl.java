@@ -19,6 +19,7 @@ public class SimServiceImpl implements SimService {
 
 	@Override
 	public List<Sim> getAllSims() {
+		
 		List<Sim> all = simRepository.findAll();
 
 		return all;

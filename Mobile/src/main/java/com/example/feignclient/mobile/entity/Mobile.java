@@ -1,4 +1,4 @@
-package com.example.feignclient.userdata.entity;
+package com.example.feignclient.mobile.entity;
 
 import java.util.List;
 
@@ -11,16 +11,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class UserData {
+public class Mobile {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long userId;
+	private Long mobileId;
+	private String mobileName;
+	private Long mobileUserId;
+	transient List<Sim> sim;
 
-	private String userName;
-	
-	transient List<Mobile> mobile;
 }

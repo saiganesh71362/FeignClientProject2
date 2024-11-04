@@ -1,7 +1,5 @@
 package com.example.feignclient.userdata.entity;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Mobile {
+public class Sim {
 
+	private Long simId;
+	private String simName;
 	private Long mobileId;
-	private String mobileName;
-	private Long userId;
-	private List<Sim> sim;
-
 }
