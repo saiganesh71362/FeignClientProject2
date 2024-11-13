@@ -22,47 +22,47 @@ public class SimServiceImpl implements SimService {
 
 	@Override
 	public List<Sim> getAllSims() {
-		logger.info("Fetch Request Send Get All Sims");
+		logger.info("Received request to fetch all sims.");
 		List<Sim> all = simRepository.findAll();
-		logger.info("Fetch Suceess Fully All Sims :{}", all.size());
+		logger.info("Successfully fetched all sims: total count [{}]", all.size());
 		return all;
 	}
 
 	@Override
 	public Sim getSimById(Long simId) throws IdNotFoundException {
-		logger.info("Fetch Request Send To Get Sim By Id :{}", simId);
+		logger.info("Received request to fetch get sim by id :{}", simId);
 		Sim orElseThrow = simRepository.findById(simId).orElseThrow(() -> {
-			logger.info("Fetch Request Send Thire Is No Sim :{}", simId);
+			logger.info("Received request sent. No sim found with ID: {}", simId);
 			return new IdNotFoundException(SimClassAppConstants.ID_NOT_FOUND + simId);
 		});
-		logger.info("Fetch Success Fully Get Sim By Id : {}", orElseThrow);
+		logger.info("Success fully fetch get sims record :{}", orElseThrow);
 		return orElseThrow;
 	}
 
 	@Override
 	public Sim saveSim(Sim sim) {
-		logger.info("Fetch Request Send To Create New Sim :{}", sim);
+		logger.info("Received request to save new sim: [{}]", sim);
 		Sim save = simRepository.save(sim);
-		logger.info("Sim Created Sucess Fully :{}", save.getSimId());
+		logger.info("Successfully saved sim with ID: [{}]", save.getSimId());
 		return save;
 	}
 
 	@Override
 	public Sim updateSimById(Long simId, Sim sim) throws IdNotFoundException {
 
-		logger.info("Request Send to Update Sim By Id :{}", simId);
+		logger.info("Received request to update sim with ID: [{}], new data: [{}]", simId, sim);
 		if (simRepository.existsById(simId)) {
 			Sim existingSim = simRepository.findById(simId).orElseThrow(() -> {
-				logger.warn("Sim ID not found for update request :{}", simId);
+				logger.warn("Sim with ID: [{}] not found during update operation", simId);
 				return new IdNotFoundException(SimClassAppConstants.ID_NOT_FOUND + simId);
 			});
 
 			existingSim.setSimName(sim.getSimName());
 			existingSim.setMobileId(sim.getMobileId());
-			logger.info("Update Sim Success Fully :{}", existingSim);
+			logger.info("Successfully updated sim with ID: [{}]", existingSim);
 			return simRepository.save(existingSim);
 		} else {
-			logger.warn("Sim ID not found for update request :{}", simId);
+			logger.warn("Sim with ID: [{}] not found, cannot proceed with update", simId);
 			throw new IdNotFoundException(SimClassAppConstants.ID_NOT_FOUND + simId);
 		}
 
@@ -91,22 +91,22 @@ public class SimServiceImpl implements SimService {
 
 	@Override
 	public Boolean deleteSimById(Long simId) throws IdNotFoundException {
-		logger.info("Request Send to Delete Sim By Id :{}", simId);
+		logger.info("Received request to delete sim with ID: [{}]", simId);
 		if (simRepository.existsById(simId)) {
 			simRepository.deleteById(simId);
-			logger.info("Sim Deleted Success Fully :{}", simId);
+			logger.info("Successfully deleted sim with ID: [{}]", simId);
 			return true;
 		} else {
-			logger.warn("Sim ID not found for update request :{}", simId);
+			logger.warn("Sim with ID: [{}] not found, cannot proceed with deletion", simId);
 			throw new IdNotFoundException(SimClassAppConstants.ID_NOT_FOUND + simId);
 		}
 	}
 
 	@Override
 	public List<Sim> getMobileById(Long mobileId) {
-		logger.info("Fetch Request Send to Get Sims By Mobile Id :{}", mobileId);
+		logger.info("Received request to fetch sim with mobile  ID: {}", mobileId);
 		List<Sim> mobileById = simRepository.findByMobileId(mobileId);
-		logger.info("Succss Fully Get Sim By Mobile Id :{}", mobileById);
+		logger.info("Successfully fetched sim  ID: {}", mobileById);
 		return mobileById;
 	}
 
