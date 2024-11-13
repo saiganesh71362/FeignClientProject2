@@ -44,62 +44,81 @@ public class MobileServiceImpl implements MobileService {
 
 	@Override
 	public Mobile getMobileById(Long mobileId) throws IdNotFoundException {
+		logger.info("Fetch Request Send Get Mobile By Id :{}", mobileId);
 		Mobile getMobileById = mobileRepository.findById(mobileId).orElseThrow(() -> {
+			logger.info("Fetch Request Send Thire Is No Mobile Id:{}", mobileId);
 			return new IdNotFoundException(MobileAppConstants.ID_NOT_FOUND + mobileId);
 		});
 
 		getMobileById.setSim(simClient.getMobileById(mobileId));
+		logger.info("Success Fully Get Mobile Data By Id :{}", getMobileById);
 		return getMobileById;
 	}
 
 	@Override
 	public Mobile saveMobile(Mobile mobile) {
+		logger.info("Request Send To Create New Mobil :{}", mobile);
 		Mobile save = mobileRepository.save(mobile);
+		logger.info("Sucess Fully Created New Mobile", save.getMobileId());
 		return save;
 	}
 
 	@Override
 	public Mobile updateMobileById(Long mobileId, Mobile mobile) throws IdNotFoundException {
+		logger.info("Update Request Send Mobile By Id :{}", mobileId);
 		if (mobileRepository.existsById(mobileId)) {
 			Mobile existingMobile = mobileRepository.findById(mobileId).orElseThrow(() -> {
+				logger.info("Fetch Request Send Thire Is No Mobile Id:{}", mobileId);
 				return new IdNotFoundException(MobileAppConstants.ID_NOT_FOUND + mobile);
 			});
 
 			existingMobile.setMobileName(mobile.getMobileName());
 			existingMobile.setMobileUserId(mobile.getMobileUserId());
+			logger.info("Update Mobile Success Fully By Id :{} ", mobileId + "-" + existingMobile);
+
 			return mobileRepository.save(existingMobile);
 		} else {
+			logger.info("Fetch Request Send Thire Is No Mobile Id:{}", mobileId);
 			throw new IdNotFoundException(MobileAppConstants.ID_NOT_FOUND + mobileId);
 		}
 	}
 
 	@Override
 	public Mobile updateFieldsMobileById(Long mobileId, Mobile mobile) throws IdNotFoundException {
-
+		logger.info("Update Request Send Mobile By Id Specific Fields :{}", mobileId);
 		if (mobileRepository.existsById(mobileId)) {
 			Mobile existingMobile = mobileRepository.findById(mobileId).orElseThrow(() -> {
+				logger.info("Update Request Send Thire Is No Mobile Id:{}", mobileId);
 				return new IdNotFoundException(MobileAppConstants.ID_NOT_FOUND + mobile);
 			});
 
 			existingMobile.setMobileName(mobile.getMobileName());
+			logger.info("Update Mobile Specific Fields Success Fully By Id :{} ", mobileId + "-" + existingMobile);
+
 			return mobileRepository.save(existingMobile);
 		} else {
+			logger.info("Update Request Send Thire Is No Mobile Id:{}", mobileId);
 			throw new IdNotFoundException(MobileAppConstants.ID_NOT_FOUND + mobileId);
 		}
 	}
 
 	@Override
 	public Boolean deleteMobileById(Long mobileId) throws IdNotFoundException {
+		logger.info("Request Send To Mobile By Id :{}", mobileId);
 		if (mobileRepository.existsById(mobileId)) {
 			mobileRepository.deleteById(mobileId);
+			logger.info("Delete Mobile Success Fully By Id :{}", mobileId);
 			return true;
 		} else {
+			logger.info("Delete Request Send Thire Is No Mobile Id:{}", mobileId);
+
 			throw new IdNotFoundException(MobileAppConstants.ID_NOT_FOUND + mobileId);
 		}
 	}
 
 	@Override
 	public List<Mobile> getMobileByUserId(Long userId) throws IdNotFoundException {
+		logger.info("Fetch Request Send GetMobileByUserId :{}", userId);
 
 		if (mobileRepository.existsById(userId)) {
 			List<Mobile> byMobileUserId = mobileRepository.findByMobileUserId(userId);
@@ -107,10 +126,14 @@ public class MobileServiceImpl implements MobileService {
 				sim.setSim(simClient.getMobileById(sim.getMobileId()));
 				return sim;
 			}).collect(Collectors.toList());
+			logger.info("Success Fully GetMobileByUserId :{}", byMobileUserId);
+
 			return collect;
 		}
 
 		else {
+			logger.info("Fetch Request Send Thire Is No Mobile Id:{}", userId);
+
 			throw new IdNotFoundException(MobileAppConstants.ID_NOT_FOUND + userId);
 		}
 

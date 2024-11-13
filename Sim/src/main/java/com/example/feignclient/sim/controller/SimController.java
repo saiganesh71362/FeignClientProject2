@@ -31,62 +31,62 @@ public class SimController {
 
 	@GetMapping("/getAllSim")
 	public ResponseEntity<List<Sim>> getAllSims() {
-		logger.info("Received Request Get All Sims");
+		logger.info("Received request to fetch all sims data.");
 		List<Sim> allSims = simServiceImpl.getAllSims();
-		logger.info("Success Fully Get All Sims :{}", allSims);
+		logger.info("Successfully fetched all sims data, total sims: [{}]", allSims.size());
 		return new ResponseEntity<>(allSims, HttpStatus.OK);
 	}
 
 	@GetMapping("/getSimById/{simId}")
 	public ResponseEntity<Sim> getSimById(@PathVariable Long simId) throws IdNotFoundException {
-		logger.info("Received Request Get Sim By Id :{}", simId);
+		logger.info("Received request to fetch sim data with ID: [{}]", simId);
 		Sim simById = simServiceImpl.getSimById(simId);
-		logger.info("Success Fully Get  Sim By Id :{}", simById);
+		logger.info("Successfully fetched sim data for ID: [{}]", simById);
 
 		return new ResponseEntity<>(simById, HttpStatus.OK);
 	}
 
 	@PostMapping("/newSimAdd")
 	public ResponseEntity<Sim> saveSim(@RequestBody Sim sim) {
-		logger.info(" Received Request  To Create New Sim:{}", sim);
+		logger.info("Received request to save new sim data: [{}]", sim);
 		Sim saveSim = simServiceImpl.saveSim(sim);
-		logger.info("Success Fully Created New Sim :{}", saveSim);
+		logger.info("Successfully saved sim with ID: [{}]", saveSim);
 		return new ResponseEntity<>(saveSim, HttpStatus.CREATED);
 	}
 
 	@PutMapping("updateSimById/{simId}")
 	public ResponseEntity<Sim> updateSimById(@PathVariable Long simId, @RequestBody Sim sim)
 			throws IdNotFoundException {
-		logger.info("Request Received To Update Sim By Id :{}", simId);
+		logger.info("Received request to update sim data for ID: [{}] with new Data: [{}]", simId, sim);
 		Sim updateSimById = simServiceImpl.updateSimById(simId, sim);
-		logger.info("Success Fully Update Sim :{}", sim);
+		logger.info("Successfully updated sim with ID: [{}]", sim);
 		return new ResponseEntity<>(updateSimById, HttpStatus.ACCEPTED);
 	}
 
 	@PatchMapping("updateSimById/{simId}")
 	public ResponseEntity<Sim> updateFieldById(@PathVariable Long simId, @RequestBody Sim sim)
 			throws IdNotFoundException {
-		logger.info("Received request to update specific fields of Sim with ID :{}", simId);
+		logger.info("Received request to update sim fields data for ID: [{}] with new Data: [{}]", simId, sim);
 
 		Sim updateFieldById = simServiceImpl.updateFieldById(simId, sim);
-		logger.info("Successfully updated specific fields of Sim: {}", sim);
+		logger.info("Successfully updated sim fields with ID: [{}]", sim);
 
 		return new ResponseEntity<>(updateFieldById, HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/deleteSimById/{simId}")
 	public ResponseEntity<Boolean> deleteSimById(@PathVariable Long simId) throws IdNotFoundException {
-		logger.info(" Received Request Delete Sim By Id:{} ", simId);
+		logger.info("Received request to delete sim with ID: [{}]", simId);
 		Boolean deleteSimById = simServiceImpl.deleteSimById(simId);
-		logger.info("Sucess Fully Delete Sim By Id :{} ", simId);
+		logger.info("Successfully deleted sim with ID: [{}]", simId);
 		return new ResponseEntity<>(deleteSimById, HttpStatus.OK);
 	}
 
 	@GetMapping("/getSimByMobileId/{mobileId}")
 	public ResponseEntity<List<Sim>> getMobileById(@PathVariable Long mobileId) {
-		logger.info("Received Request Get Sim With Mobile Id :{}", mobileId);
+		logger.info("Received request to fetch sim with mobile Id :[{}]", mobileId);
 		List<Sim> mobileById = simServiceImpl.getMobileById(mobileId);
-		logger.info("Success Fully Get Sims With Mobile Id :{}", mobileById);
+		logger.info("Successfully get sims with mobile Id :[{}]", mobileById);
 		return new ResponseEntity<List<Sim>>(mobileById, HttpStatus.OK);
 	}
 
