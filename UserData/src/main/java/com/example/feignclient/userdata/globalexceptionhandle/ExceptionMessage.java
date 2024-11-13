@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExceptionMessage {
-	
+
 	private String message;
 	private String description;
 	private Date date;

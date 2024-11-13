@@ -3,6 +3,8 @@ package com.example.feignclient.mobile.serviceimpl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.example.feignclient.mobile.appconstants.MobileAppConstants;
@@ -15,6 +17,8 @@ import com.example.feignclient.mobile.service.SimClient;
 @Service
 public class MobileServiceImpl implements MobileService {
 
+	private Logger logger = LogManager.getLogger(MobileServiceImpl.class);
+
 	MobileRepository mobileRepository;
 	SimClient simClient;
 
@@ -26,12 +30,15 @@ public class MobileServiceImpl implements MobileService {
 
 	@Override
 	public List<Mobile> getAllMobiles() {
+		logger.info("Fetch Request Send Get All Mobiles With Sims");
 		List<Mobile> getAllMobiles = mobileRepository.findAll();
+
 		List<Mobile> collectMobiles = getAllMobiles.stream().map(sim -> {
 			sim.setSim(simClient.getMobileById(sim.getMobileId()));
 			return sim;
 		}).collect(Collectors.toList());
 
+		logger.info("Success Fully Fetch All Mobile :{}", getAllMobiles);
 		return collectMobiles;
 	}
 
